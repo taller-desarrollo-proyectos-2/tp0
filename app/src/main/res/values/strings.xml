@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">tp0</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="open_weather_api_key">32ffc1fef8f297d2ad71a4787d55f324</string>
+
+    <string name="open_weather_failed_connection">Connection to Open Weather API failed!</string>
+</resources>
