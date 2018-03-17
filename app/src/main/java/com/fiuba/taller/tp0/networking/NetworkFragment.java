@@ -73,8 +73,8 @@ public class NetworkFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        // Host Activity will handle callbacks from task.
-        mCallback = (DownloadCallback) context;
+        // Host Activity would handle callbacks from task if we force downloadcallbacks to be activities
+        // mCallback = (DownloadCallback) context;
     }
 
     @Override
@@ -94,7 +94,8 @@ public class NetworkFragment extends Fragment {
     /**
      * Start non-blocking execution of DownloadTask.
      */
-    public void startDownload() {
+    public void startDownload(DownloadCallback callback) {
+        mCallback = callback;
         cancelDownload();
         mDownloadTask = new DownloadTask(mCallback);
         mDownloadTask.execute(mNetworkObject);
@@ -130,7 +131,7 @@ public class NetworkFragment extends Fragment {
         @Override
         protected void onPreExecute() {
             if (mCallback != null) {
-                NetworkInfo networkInfo = mCallback.getActiveNetworkInfo();
+                NetworkInfo networkInfo = mCallback.getActiveNetworkInfo(getContext());
                 if (networkInfo == null || !networkInfo.isConnected() ||
                         (networkInfo.getType() != ConnectivityManager.TYPE_WIFI
                                 && networkInfo.getType() != ConnectivityManager.TYPE_MOBILE)) {

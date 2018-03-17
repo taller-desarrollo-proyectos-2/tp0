@@ -1,5 +1,6 @@
 package com.fiuba.taller.tp0.networking;
 
+import android.content.Context;
 import android.net.NetworkInfo;
 
 public interface DownloadCallback<T> {
@@ -19,7 +20,7 @@ public interface DownloadCallback<T> {
     /**
      * Get the device's active network status in the form of a NetworkInfo object.
      */
-    NetworkInfo getActiveNetworkInfo();
+    NetworkInfo getActiveNetworkInfo(Context context);
 
     /**
      * Indicate to callback handler any progress update.

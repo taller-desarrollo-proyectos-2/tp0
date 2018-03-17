@@ -3,48 +3,84 @@ package com.fiuba.taller.tp0.services.weather;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.json.JSONObject;
 
+import android.app.Activity;
+import android.app.FragmentManager;
 import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.util.Log;
 
 import com.fiuba.taller.tp0.R;
+import com.fiuba.taller.tp0.networking.DownloadCallback;
+import com.fiuba.taller.tp0.networking.HttpMethodType;
+import com.fiuba.taller.tp0.networking.NetworkFragment;
+import com.fiuba.taller.tp0.networking.NetworkObject;
+import com.fiuba.taller.tp0.networking.NetworkResult;
 
 import javax.net.ssl.HttpsURLConnection;
 
-public class OpenWeatherService implements WeatherService {
+public class OpenWeatherService implements WeatherService, DownloadCallback<NetworkResult> {
 
+    private static final String SERVICE_LOG_TAG = "OpenWeatherService";
     private static final String OPEN_WEATHER_MAP_API_FORMAT =
             "http://api.openweathermap.org/data/2.5/weather?q=%s";
 
-    public static JSONObject getJSON(Context context, String city){
-        try {
-            URL url = new URL(String.format(OPEN_WEATHER_MAP_API_FORMAT, city));
-            HttpsURLConnection connection = (HttpsURLConnection) url.openConnection();
+    private NetworkFragment mNetworkFragment = null;
+    private boolean mDownloading = false;
 
-            connection.addRequestProperty("x-api-key", context.getString(R.string.open_weather_api_key));
+    // DownloadCallback implementation
+    @Override
+    public void onResponseReceived(NetworkResult result) {
+        // update UI
+        Log.i("Result", result.toString());
+    }
 
-            BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+    @Override
+    public NetworkInfo getActiveNetworkInfo(Context context) {
+        ConnectivityManager connectivityManager =
+                (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+        return networkInfo;
+    }
 
-            StringBuffer jsonBuffer = new StringBuffer(1024);
-            String tmp;
-            while((tmp = reader.readLine()) != null) {
-                jsonBuffer.append(tmp).append("\n");
-            }
-            reader.close();
+    @Override
+    public void onProgressUpdate(int progressCode, int percentComplete) {
+    }
 
-            JSONObject data = new JSONObject(jsonBuffer.toString());
-
-            // cod should be 200 if the request was successful
-            if(data.getInt("cod") != 200){
-                Log.e("Open Weather Error", context.getString(R.string.open_weather_failed_connection));
-                return null;
-            }
-            return data;
-        }catch(Exception e){
-            Log.e("Open Weather Error", context.getString(R.string.open_weather_failed_connection));
-            return null;
+    @Override
+    public void onFinishDownloading() {
+        if (mNetworkFragment != null) {
+            mNetworkFragment.cancelDownload();
         }
+        mDownloading = false;
+    }
+
+    @Override
+    public void getWeatherData(String cityName, Activity activity) {
+
+
+        if (mNetworkFragment == null) {
+            NetworkObject networkObject = createRequestNetworkObject(activity);
+            mNetworkFragment = NetworkFragment.getInstance(activity.getFragmentManager(), networkObject);
+        }
+        if (!mDownloading && mNetworkFragment != null) {
+            // Execute the async download.
+            mNetworkFragment.startDownload(this);
+            mDownloading = true;
+        }
+    }
+
+    private NetworkObject createRequestNetworkObject(Context context)
+    {
+        // TODO: get url
+        String url = "https://api.openweathermap.org/data/2.5/forecast?id=524901";
+        Map<String, String> requestProperties = new HashMap<>();
+        requestProperties.put("x-api-key", context.getString(R.string.open_weather_api_key));
+        return new NetworkObject(url, HttpMethodType.GET, requestProperties);
     }
 }
