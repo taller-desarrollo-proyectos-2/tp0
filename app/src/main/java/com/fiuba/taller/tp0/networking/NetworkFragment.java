@@ -135,7 +135,7 @@ public class NetworkFragment extends Fragment {
                         (networkInfo.getType() != ConnectivityManager.TYPE_WIFI
                                 && networkInfo.getType() != ConnectivityManager.TYPE_MOBILE)) {
                     // If no connectivity, cancel task and update Callback with null data.
-                    mCallback.updateFromDownload(null);
+                    mCallback.onResponseReceived(null);
                     cancel(true);
                 }
             }
@@ -161,9 +161,9 @@ public class NetworkFragment extends Fragment {
         protected void onPostExecute(NetworkResult result) {
             if (mCallback != null) {
                 if (result != null) {
-                    mCallback.updateFromDownload(result);
+                    mCallback.onResponseReceived(result);
                 }
-                mCallback.finishDownloading();
+                mCallback.onFinishDownloading();
             }
         }
 

@@ -79,7 +79,7 @@ public class MainActivity extends AppCompatActivity implements DownloadCallback<
     // DownloadCallback implementation
 
     @Override
-    public void updateFromDownload(NetworkResult result) {
+    public void onResponseReceived(NetworkResult result) {
         // update UI
         Log.i("Result", result.toString());
     }
@@ -97,10 +97,11 @@ public class MainActivity extends AppCompatActivity implements DownloadCallback<
     }
 
     @Override
-    public void finishDownloading() {
+    public void onFinishDownloading() {
         if (mNetworkFragment != null) {
             mNetworkFragment.cancelDownload();
         }
+        mDownloading = false;
     }
 
     private boolean isOnline() {
