@@ -8,7 +8,7 @@ package com.fiuba.taller.tp0.networking;
 public class NetworkResult {
     public String mResultValue;
     public Exception mException;
-    String mUrl;
+    public String mUrl;
 
     public NetworkResult(String resultValue, String url) {
         mResultValue = resultValue;

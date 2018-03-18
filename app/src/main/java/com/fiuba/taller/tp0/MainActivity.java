@@ -1,34 +1,24 @@
 package com.fiuba.taller.tp0;
 
-import android.app.Service;
 import android.content.Context;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.fiuba.taller.tp0.networking.DownloadCallback;
-import com.fiuba.taller.tp0.networking.HttpMethodType;
 import com.fiuba.taller.tp0.networking.NetworkFragment;
-import com.fiuba.taller.tp0.networking.NetworkHelper;
-import com.fiuba.taller.tp0.networking.NetworkObject;
-import com.fiuba.taller.tp0.networking.NetworkResult;
-import com.fiuba.taller.tp0.services.CustomService;
+import com.fiuba.taller.tp0.networking.NetworkUtils;
 import com.fiuba.taller.tp0.services.ServiceLocator;
 import com.fiuba.taller.tp0.services.weather.OpenWeatherService;
+import com.fiuba.taller.tp0.services.weather.WeatherData;
+import com.fiuba.taller.tp0.services.weather.WeatherDisplayer;
 import com.fiuba.taller.tp0.services.weather.WeatherService;
 
-import java.util.HashMap;
-import java.util.Map;
-
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements WeatherDisplayer {
 
     private NetworkFragment mNetworkFragment = null;
     private boolean mDownloading = false;
@@ -49,11 +39,11 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
         bindServices(getApplicationContext());
-        Log.i("Result", "Get Data");
 
         WeatherService s = ServiceLocator.get(WeatherService.class);
-        s.getWeatherData("", this);
+        s.getWeatherData("Paris", this, this);
 }
 
     @Override
@@ -85,6 +75,16 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private boolean isOnline() {
-        return NetworkHelper.IsOnline(getBaseContext());
+        return NetworkUtils.IsOnline(getBaseContext());
+    }
+
+    @Override
+    public void DisplayWeatherData(WeatherData weatherData) {
+
+    }
+
+    @Override
+    public void DisplayException(Exception e) {
+
     }
 }

@@ -1,15 +1,9 @@
 package com.fiuba.taller.tp0.services.weather;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.json.JSONObject;
-
 import android.app.Activity;
-import android.app.FragmentManager;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -22,22 +16,40 @@ import com.fiuba.taller.tp0.networking.NetworkFragment;
 import com.fiuba.taller.tp0.networking.NetworkObject;
 import com.fiuba.taller.tp0.networking.NetworkResult;
 
-import javax.net.ssl.HttpsURLConnection;
-
 public class OpenWeatherService implements WeatherService, DownloadCallback<NetworkResult> {
 
     private static final String SERVICE_LOG_TAG = "OpenWeatherService";
     private static final String OPEN_WEATHER_MAP_API_FORMAT =
-            "http://api.openweathermap.org/data/2.5/weather?q=%s";
+            "https://api.openweathermap.org/data/2.5/weather?q=%s";
 
+    private WeatherDisplayer mWeatherDisplayer;
     private NetworkFragment mNetworkFragment = null;
     private boolean mDownloading = false;
 
-    // DownloadCallback implementation
+    @Override
+    public void getWeatherData(String cityName, WeatherDisplayer displayer, Activity activity) {
+        mWeatherDisplayer = displayer;
+        if (mNetworkFragment == null) {
+            NetworkObject networkObject = createRequestNetworkObject(cityName, activity);
+            mNetworkFragment = NetworkFragment.getInstance(activity.getFragmentManager(), networkObject);
+        }
+        if (!mDownloading && mNetworkFragment != null) {
+            // Execute the async download.
+            mNetworkFragment.startDownload(this);
+            mDownloading = true;
+        }
+    }
+
     @Override
     public void onResponseReceived(NetworkResult result) {
         // update UI
-        Log.i("Result", result.toString());
+        if (result.mResultValue != null) {
+            WeatherData data = parseResponse(result.mResultValue);
+            mWeatherDisplayer.DisplayWeatherData(data);
+        } else {
+            mWeatherDisplayer.DisplayException(result.mException);
+        }
+        Log.i(SERVICE_LOG_TAG, result.toString());
     }
 
     @Override
@@ -60,27 +72,16 @@ public class OpenWeatherService implements WeatherService, DownloadCallback<Netw
         mDownloading = false;
     }
 
-    @Override
-    public void getWeatherData(String cityName, Activity activity) {
-
-
-        if (mNetworkFragment == null) {
-            NetworkObject networkObject = createRequestNetworkObject(activity);
-            mNetworkFragment = NetworkFragment.getInstance(activity.getFragmentManager(), networkObject);
-        }
-        if (!mDownloading && mNetworkFragment != null) {
-            // Execute the async download.
-            mNetworkFragment.startDownload(this);
-            mDownloading = true;
-        }
-    }
-
-    private NetworkObject createRequestNetworkObject(Context context)
+    private NetworkObject createRequestNetworkObject(String cityName, Context context)
     {
-        // TODO: get url
-        String url = "https://api.openweathermap.org/data/2.5/forecast?id=524901";
+        String url = String.format(OPEN_WEATHER_MAP_API_FORMAT, cityName);
+        url = "https://api.openweathermap.org/data/2.5/forecast?id=3435910";
         Map<String, String> requestProperties = new HashMap<>();
         requestProperties.put("x-api-key", context.getString(R.string.open_weather_api_key));
         return new NetworkObject(url, HttpMethodType.GET, requestProperties);
+    }
+
+    private WeatherData parseResponse(String response) {
+        return null;
     }
 }
