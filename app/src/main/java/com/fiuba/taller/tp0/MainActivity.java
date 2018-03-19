@@ -18,6 +18,7 @@ import android.widget.Toast;
 import com.fiuba.taller.tp0.networking.NetworkFragment;
 import com.fiuba.taller.tp0.networking.NetworkUtils;
 import com.fiuba.taller.tp0.services.ServiceLocator;
+import com.fiuba.taller.tp0.services.weather.CityPreference;
 import com.fiuba.taller.tp0.services.weather.OpenWeatherService;
 import com.fiuba.taller.tp0.services.weather.WeatherData;
 import com.fiuba.taller.tp0.services.weather.WeatherDisplayer;
@@ -25,6 +26,7 @@ import com.fiuba.taller.tp0.services.weather.WeatherService;
 
 public class MainActivity extends AppCompatActivity implements WeatherDisplayer {
 
+    private CityPreference mCityPreference;
     private NetworkFragment mNetworkFragment = null;
     private boolean mDownloading = false;
 
@@ -50,6 +52,7 @@ public class MainActivity extends AppCompatActivity implements WeatherDisplayer 
 
         bindServices(getApplicationContext());
 
+        mCityPreference = new CityPreference(this);
 
         final ListView milista = (ListView)findViewById(R.id.milista);
 
@@ -106,6 +109,10 @@ public class MainActivity extends AppCompatActivity implements WeatherDisplayer 
 
     private boolean isOnline() {
         return NetworkUtils.IsOnline(getBaseContext());
+    }
+
+    private String GetChosenCityId() {
+        return mCityPreference.getPreferedCityId();
     }
 
     @Override
