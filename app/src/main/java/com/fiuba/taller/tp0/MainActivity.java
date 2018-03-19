@@ -17,13 +17,13 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.fiuba.taller.tp0.networking.NetworkFragment;
-import com.fiuba.taller.tp0.networking.NetworkUtils;
 import com.fiuba.taller.tp0.services.ServiceLocator;
 import com.fiuba.taller.tp0.services.weather.CityPreference;
 import com.fiuba.taller.tp0.services.weather.OpenWeatherService;
 import com.fiuba.taller.tp0.services.weather.WeatherData;
 import com.fiuba.taller.tp0.services.weather.WeatherDisplayer;
 import com.fiuba.taller.tp0.services.weather.WeatherService;
+import com.fiuba.taller.tp0.utils.NetworkUtils;
 
 import java.util.List;
 
