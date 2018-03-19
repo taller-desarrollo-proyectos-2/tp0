@@ -5,7 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.fiuba.taller.tp0.MainActivity">
+
     <TableRow>
+
         <ImageView
             android:id="@+id/imgClima"
             android:layout_width="35dp"
