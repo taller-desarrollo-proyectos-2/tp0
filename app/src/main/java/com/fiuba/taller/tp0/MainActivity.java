@@ -169,10 +169,18 @@ public class MainActivity extends AppCompatActivity implements WeatherDisplayer 
                 "Viernes"
         } ;
         Integer[] imageId = {
-                1,2,3,4,5
+                R.drawable.a10d,
+                R.drawable.a02d,
+                R.drawable.a03d,
+                R.drawable.a04d,
+                R.drawable.a13d
         };
         Integer[] imageId2 = {
-                1,2,3,4,5
+                R.drawable.a01n,
+                R.drawable.a10n,
+                R.drawable.a11n,
+                R.drawable.a50n,
+                R.drawable.a04n
         };
         String[] _temp1 = {"1","2","3","4","5"};
         String[] _temp2 = {"1","3","2","4","5"};
