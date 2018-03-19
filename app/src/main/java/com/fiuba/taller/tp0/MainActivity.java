@@ -35,30 +35,7 @@ public class MainActivity extends AppCompatActivity implements WeatherDisplayer 
 
     private ListView list;
     //private ArrayAdapter<String> adaptador = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, sistemas);
-    private ListView list1;
-    String[] dias = {
-            "Lunes",
-            "Martes",
-            "Miercoles",
-            "Jueves",
-            "Viernes"
-    } ;
-    Integer[] imageId = {
-            R.drawable.ic_launcher_background,
-            R.drawable.ic_launcher_background,
-            R.drawable.ic_launcher_background,
-            R.drawable.ic_launcher_background,
-            R.drawable.ic_launcher_background
-    };
-    Integer[] imageId2 = {
-            R.drawable.ic_launcher_background,
-            R.drawable.ic_launcher_background,
-            R.drawable.ic_launcher_background,
-            R.drawable.ic_launcher_background,
-            R.drawable.ic_launcher_background
-    };
-    String[] _temp1 = {"1","2","3","4","5"};
-    String[] _temp2 = {"1","3","2","4","5"};
+
 
 
 
@@ -88,11 +65,11 @@ public class MainActivity extends AppCompatActivity implements WeatherDisplayer 
 
         final ListView milista = (ListView)findViewById(R.id.milista);
 
-        WeatherData lunes = new WeatherData("a",2,3,4);
-        WeatherData martes = new WeatherData("a",2,3,4);
-        WeatherData miercoles = new WeatherData("a",2,3,4);
-        WeatherData jueves = new WeatherData("a",2,3,4);
-        WeatherData viernes = new WeatherData("a",2,3,4);
+//        WeatherData lunes = new WeatherData("a",2,3,4);
+//        WeatherData martes = new WeatherData("a",2,3,4);
+//        WeatherData miercoles = new WeatherData("a",2,3,4);
+//        WeatherData jueves = new WeatherData("a",2,3,4);
+//        WeatherData viernes = new WeatherData("a",2,3,4);
 
         //WeatherData[] values = new WeatherData[]{lunes,martes,miercoles,jueves,viernes};
         //ArrayAdapter<WeatherData> adapter = new ArrayAdapter<WeatherData>(this, R.layout.dia_main, values);
@@ -128,18 +105,7 @@ public class MainActivity extends AppCompatActivity implements WeatherDisplayer 
             }
         });
 */
-        MainPrueba adapter1 = new MainPrueba(MainActivity.this, dias, imageId,imageId2,_temp1,_temp2);
-        list1=(ListView)findViewById(R.id.milista);
-        list1.setAdapter(adapter1);
-        list1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view,
-                                    int position, long id) {
-                //Toast.makeText(MainActivity.this, "You Clicked at " +web[+ position], Toast.LENGTH_SHORT).show();
-
-            }
-        });
     }
 
     @Override
@@ -194,8 +160,35 @@ public class MainActivity extends AppCompatActivity implements WeatherDisplayer 
 
     @Override
     public void displayWeatherData(List<WeatherData> weatherData) {
+        ListView list1;
+        String[] dias = {
+                "Lunes",
+                "Martes",
+                "Miercoles",
+                "Jueves",
+                "Viernes"
+        } ;
+        Integer[] imageId = {
+                1,2,3,4,5
+        };
+        Integer[] imageId2 = {
+                1,2,3,4,5
+        };
+        String[] _temp1 = {"1","2","3","4","5"};
+        String[] _temp2 = {"1","3","2","4","5"};
 
-        //TODO:
+        MainPrueba adapter1 = new MainPrueba(MainActivity.this, dias, imageId,imageId2,_temp1,_temp2);
+        list1=(ListView)findViewById(R.id.milista);
+        list1.setAdapter(adapter1);
+        list1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view,
+                                    int position, long id) {
+                //Toast.makeText(MainActivity.this, "You Clicked at " +web[+ position], Toast.LENGTH_SHORT).show();
+
+            }
+        });
     }
 
     @Override

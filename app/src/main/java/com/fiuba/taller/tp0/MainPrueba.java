@@ -1,6 +1,8 @@
 package com.fiuba.taller.tp0;
 
 import android.app.Activity;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,6 +37,12 @@ public class MainPrueba extends ArrayAdapter<String>{
 
         TextView nomDia = (TextView) rowView.findViewById(R.id.txt);
         nomDia.setText(nombreSemana[position]);
+
+        //ImageView imageView = (ImageView) rowView.findViewById(R.id.img);
+        //imageView.setImageResource(imgM[position]);
+
+        //ImageView imageView1 = (ImageView) rowView.findViewById(R.id.img2);
+        //imageView1.setImageResource(imgT[position]);
 
         ImageView imageView = (ImageView) rowView.findViewById(R.id.img);
         imageView.setImageResource(imgM[position]);
