@@ -23,7 +23,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".SelectCityActivity"
-            android:parentActivityName=".MainActivity" >
+            android:parentActivityName=".MainActivity"
+            android:label="@string/tittle_cities"
+            >
         </activity>
     </application>
 

@@ -4,10 +4,9 @@ import android.app.Activity;
 import android.content.SharedPreferences;
 
 public class CityPreference {
-    private static final String KEY = "city_id";
+    private static final String KEY = "city_name";
 
-    // Default id is Buenos Aires
-    private static final String DEFAULT_CITY_ID = "3699223";
+    private static final String DEFAULT_CITY_NAME = "Buenos Aires";
 
     private SharedPreferences mSharedPrefs;
 
@@ -15,11 +14,11 @@ public class CityPreference {
         mSharedPrefs = activity.getPreferences(Activity.MODE_PRIVATE);
     }
 
-    public String getPreferedCityId(){
-        return mSharedPrefs.getString(KEY, DEFAULT_CITY_ID);
+    public String getPreferedCityName(){
+        return mSharedPrefs.getString(KEY, DEFAULT_CITY_NAME);
     }
 
-    public void setPreferedCityId(String cityId){
-        mSharedPrefs.edit().putString(KEY, cityId).commit();
+    public void setPreferedCityName(String cityName){
+        mSharedPrefs.edit().putString(KEY, cityName).commit();
     }
 }
