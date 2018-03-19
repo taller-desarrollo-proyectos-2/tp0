@@ -2,6 +2,7 @@ package com.fiuba.taller.tp0.services.weather;
 
 import android.content.Context;
 import android.util.Log;
+import android.util.Pair;
 
 import com.fiuba.taller.tp0.R;
 
@@ -17,7 +18,7 @@ import java.util.Map;
 public class CitiesLoader {
     private static final String LOGGER_TAG = "CitiesLoader";
 
-    private Map<Integer, String> mCitiesLookUp = new HashMap<>();
+    private Map<Integer, Pair<String, String>> mCitiesLookUp = new HashMap<>();
     private List<String> mCitiesNames = new ArrayList<>();
 
     public void loadCities(Context context) {
@@ -40,7 +41,8 @@ public class CitiesLoader {
 
                 String cityName = splited[0].replace(citySpaceToken, replacement);
                 String cityId = splited[1];
-                mCitiesLookUp.put(index, cityId);
+                Pair<String, String> mapValue = new Pair<>(cityId, cityName);
+                mCitiesLookUp.put(index, mapValue);
                 mCitiesNames.add(cityName);
                 index++;
             }
@@ -52,7 +54,11 @@ public class CitiesLoader {
     }
 
     public String GetCityId(int key) {
-        return mCitiesLookUp.get(key);
+        return mCitiesLookUp.get(key).first;
+    }
+
+    public String GetCityName(int key) {
+        return mCitiesLookUp.get(key).second;
     }
 
     public List<String> getCities() {
