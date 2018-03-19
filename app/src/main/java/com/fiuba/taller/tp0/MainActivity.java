@@ -1,7 +1,9 @@
 package com.fiuba.taller.tp0;
 
+import android.app.ActionBar;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -18,6 +20,7 @@ import com.fiuba.taller.tp0.services.ServiceLocator;
 import com.fiuba.taller.tp0.services.weather.CityPreference;
 import com.fiuba.taller.tp0.services.weather.WeatherData;
 import com.fiuba.taller.tp0.services.weather.WeatherDisplayer;
+import com.fiuba.taller.tp0.services.weather.WeatherIconsHelper;
 import com.fiuba.taller.tp0.services.weather.WeatherService;
 import com.fiuba.taller.tp0.utils.CalendarUtils;
 import com.fiuba.taller.tp0.utils.NetworkUtils;
@@ -63,6 +66,8 @@ public class MainActivity extends AppCompatActivity implements WeatherDisplayer 
         }
 
         final ListView milista = (ListView)findViewById(R.id.milista);
+
+        milista.setLayoutParams(new ConstraintLayout.LayoutParams(ConstraintLayout.LayoutParams.WRAP_CONTENT, getResources().getDisplayMetrics().heightPixels));
 
 //        WeatherData lunes = new WeatherData("a",2,3,4);
 //        WeatherData martes = new WeatherData("a",2,3,4);
@@ -171,26 +176,14 @@ public class MainActivity extends AppCompatActivity implements WeatherDisplayer 
     public void displayWeatherData(List<WeatherData> weatherData) {
         ListView list1;
 
-        String[] dias = getFiveNextDays();
+        String[] dias = getFiveNextDays(weatherData);
 
-        Integer[] imageId = {
-                R.drawable.a10d,
-                R.drawable.a02d,
-                R.drawable.a03d,
-                R.drawable.a04d,
-                R.drawable.a13d
-        };
-        Integer[] imageId2 = {
-                R.drawable.a01n,
-                R.drawable.a10n,
-                R.drawable.a11n,
-                R.drawable.a50n,
-                R.drawable.a04n
-        };
-        String[] _temp1 = {"1","2","3","4","5"};
-        String[] _temp2 = {"1","3","2","4","5"};
+        Integer[] dayIconsI = getDayWeatherIcons(weatherData);
+        Integer[] nightIcons = getNightWeatherIcons(weatherData);
+        String[] dayTemperatures = getDayTemperatures(weatherData);
+        String[] nightTemperatures = getNightTemperatures(weatherData);
 
-        MainPrueba adapter1 = new MainPrueba(MainActivity.this, dias, imageId,imageId2,_temp1,_temp2);
+        MainPrueba adapter1 = new MainPrueba(MainActivity.this, dias, dayIconsI, nightIcons, dayTemperatures, nightTemperatures);
         list1=(ListView)findViewById(R.id.milista);
         list1.setAdapter(adapter1);
         list1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -209,15 +202,54 @@ public class MainActivity extends AppCompatActivity implements WeatherDisplayer 
         showNoConnectionToast();
     }
 
-    private String[] getFiveNextDays(){
+    private String[] getFiveNextDays(List<WeatherData> weatherDataList){
         List<String> days = new ArrayList<>();
-        Calendar calendar = Calendar.getInstance();
-        SimpleDateFormat dateFormater = new SimpleDateFormat("yyyy-MM-dd");
-        for (int i = 0; i < 5; i++) {
-            String day = CalendarUtils.getDayOfWeek(dateFormater.format(calendar.getTime()), "-");
+        for (int i = 0; i < weatherDataList.size(); i++) {
+            WeatherData data = weatherDataList.get(i);
+            String day = CalendarUtils.getDayOfWeek(data.getDate(), "-");
             days.add(day);
-            calendar.add(Calendar.DAY_OF_MONTH, 1);
         }
-        return days.toArray(new String[5]);
+        return days.toArray(new String[weatherDataList.size()]);
+    }
+
+    private Integer[] getDayWeatherIcons(List<WeatherData> weatherDataList) {
+        List<Integer> dayIcons = new ArrayList<>();
+        for (int i = 0; i < weatherDataList.size(); i++) {
+            WeatherData data = weatherDataList.get(i);
+            int icon = WeatherIconsHelper.getDayWeatherIcon(data.getDayWeatherType());
+            dayIcons.add(icon);
+        }
+        return dayIcons.toArray(new Integer[weatherDataList.size()]);
+    }
+
+    private Integer[] getNightWeatherIcons(List<WeatherData> weatherDataList) {
+        List<Integer> nightIcons = new ArrayList<>();
+        for (int i = 0; i < weatherDataList.size(); i++) {
+            WeatherData data = weatherDataList.get(i);
+            int icon = WeatherIconsHelper.getNightWeatherIcon(data.getNightWeatherType());
+            nightIcons.add(icon);
+        }
+        return nightIcons.toArray(new Integer[weatherDataList.size()]);
+    }
+
+    private String[] getDayTemperatures(List<WeatherData> weatherDataList) {
+        List<String> daysTemperatures = new ArrayList<>();
+        for (int i = 0; i < weatherDataList.size(); i++) {
+            WeatherData data = weatherDataList.get(i);
+            double temperature = data.getDayTemperature();
+
+            daysTemperatures.add(String.format("%.2f", temperature));
+        }
+        return daysTemperatures.toArray(new String[weatherDataList.size()]);
+    }
+
+    private String[] getNightTemperatures(List<WeatherData> weatherDataList) {
+        List<String> nightTemperatures = new ArrayList<>();
+        for (int i = 0; i < weatherDataList.size(); i++) {
+            WeatherData data = weatherDataList.get(i);
+            double temperature = data.getNightTemperature();
+            nightTemperatures.add(String.format("%.2f", temperature));
+        }
+        return nightTemperatures.toArray(new String[weatherDataList.size()]);
     }
 }
