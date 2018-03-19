@@ -1,7 +1,6 @@
 package com.fiuba.taller.tp0.services.weather;
 
 import android.content.Context;
-import android.content.res.AssetManager;
 import android.util.Log;
 
 import com.fiuba.taller.tp0.R;
@@ -16,10 +15,10 @@ import java.util.List;
 import java.util.Map;
 
 public class CitiesLoader {
-    private static final String CITIES_FILE_PATH = "../assets/files/cities_list.txt";
     private static final String LOGGER_TAG = "CitiesLoader";
 
-    private Map<String, String> mCitiesLookUp = new HashMap<>();
+    private Map<Integer, String> mCitiesLookUp = new HashMap<>();
+    private List<String> mCitiesNames = new ArrayList<>();
 
     public void loadCities(Context context) {
         try {
@@ -27,16 +26,23 @@ public class CitiesLoader {
             final String citySpaceToken = "_";
             final String replacement = " ";
 
+            mCitiesLookUp.clear();
+            mCitiesNames.clear();
+
             InputStream is = context.getResources().openRawResource(R.raw.cities_list);
             BufferedReader in = new BufferedReader(new InputStreamReader(is));
             String line;
+            int index = 0;
             while ((line = in.readLine()) != null) {
                 String[] splited = line.split(splitRegex);
 
                 if (splited.length < 2) continue;
+
                 String cityName = splited[0].replace(citySpaceToken, replacement);
                 String cityId = splited[1];
-                mCitiesLookUp.put(cityName, cityId);
+                mCitiesLookUp.put(index, cityId);
+                mCitiesNames.add(cityName);
+                index++;
             }
             Log.i(LOGGER_TAG, "Cities loaded");
         } catch (IOException e) {
@@ -45,11 +51,11 @@ public class CitiesLoader {
         }
     }
 
-    public String GetCityId(String cityName) {
-        return mCitiesLookUp.get(cityName);
+    public String GetCityId(int key) {
+        return mCitiesLookUp.get(key);
     }
 
     public List<String> getCities() {
-        return new ArrayList<>(mCitiesLookUp.keySet());
+        return mCitiesNames;
     }
 }

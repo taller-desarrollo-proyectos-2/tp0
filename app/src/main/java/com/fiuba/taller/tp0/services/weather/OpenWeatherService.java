@@ -17,6 +17,8 @@ import com.fiuba.taller.tp0.networking.NetworkFragment;
 import com.fiuba.taller.tp0.networking.NetworkObject;
 import com.fiuba.taller.tp0.networking.NetworkResult;
 
+import org.json.JSONObject;
+
 public class OpenWeatherService implements WeatherService, DownloadCallback<NetworkResult> {
 
     private static final String SERVICE_LOG_TAG = "OpenWeatherService";
@@ -52,8 +54,8 @@ public class OpenWeatherService implements WeatherService, DownloadCallback<Netw
     }
 
     @Override
-    public String getCityId(String cityName) {
-        return mCitiesLoader.GetCityId(cityName);
+    public String getCityId(int indexKey) {
+        return mCitiesLoader.GetCityId(indexKey);
     }
 
     @Override
@@ -102,7 +104,7 @@ public class OpenWeatherService implements WeatherService, DownloadCallback<Netw
     }
 
     private WeatherData parseResponse(String response) {
-        //TODO: STRING TO JASON, JASON TO WEATHERDATA
+
         return null;
     }
 }

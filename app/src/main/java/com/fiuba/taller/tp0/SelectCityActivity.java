@@ -28,9 +28,4 @@ public class SelectCityActivity extends AppCompatActivity {
         ArrayAdapter<String> adapterCity = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, s.getCities());
         milistacities.setAdapter(adapterCity);
     }
-
-    /** Called when the user taps the Send button */
-    public void sendMessage(View view) {
-        // Do something in response to button
-    }
 }

@@ -11,5 +11,5 @@ public interface WeatherService extends CustomService {
 
     public void getWeatherData(String cityName, @NonNull WeatherDisplayer displayer, @NonNull Activity activity);
     public List<String> getCities();
-    public String getCityId(String cityName);
+    public String getCityId(int indexKey);
 }
