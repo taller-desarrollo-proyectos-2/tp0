@@ -22,6 +22,11 @@ public class SelectCityActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.cities_main);
+
+        WeatherService s = ServiceLocator.get(WeatherService.class);
+        final ListView milistacities = (ListView)findViewById(R.id.milistacities);
+        ArrayAdapter<String> adapterCity = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, s.getCities());
+        milistacities.setAdapter(adapterCity);
     }
 
     /** Called when the user taps the Send button */
