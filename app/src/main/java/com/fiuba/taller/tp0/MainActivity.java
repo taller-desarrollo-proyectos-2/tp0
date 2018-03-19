@@ -204,6 +204,11 @@ public class MainActivity extends AppCompatActivity implements WeatherDisplayer 
         });
     }
 
+    @Override
+    public void displayException(Exception e) {
+        showNoConnectionToast();
+    }
+
     private String[] getFiveNextDays(){
         List<String> days = new ArrayList<>();
         Calendar calendar = Calendar.getInstance();
@@ -214,10 +219,5 @@ public class MainActivity extends AppCompatActivity implements WeatherDisplayer 
             calendar.add(Calendar.DAY_OF_MONTH, 1);
         }
         return days.toArray(new String[5]);
-    }
-
-    @Override
-    public void displayException(Exception e) {
-        showNoConnectionToast();
     }
 }

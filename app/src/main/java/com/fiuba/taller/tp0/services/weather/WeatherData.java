@@ -2,13 +2,14 @@ package com.fiuba.taller.tp0.services.weather;
 
 public class WeatherData {
     private String mCityName;
-    private float mDayTemperature;
-    private float mNightTemperature;
+    private double mDayTemperature;
+    private double mNightTemperature;
     private int mHumidity;
+    private String weatherType;
 
     public WeatherData() {}
 
-    public WeatherData(String _cityName,float _dayTemperature, float _nightTemperature, int _humidity){
+    public WeatherData(String _cityName,double _dayTemperature, double _nightTemperature, int _humidity){
         mCityName = _cityName;
         mDayTemperature = _dayTemperature;
         mNightTemperature = _nightTemperature;
@@ -18,11 +19,11 @@ public class WeatherData {
         return mCityName;
     }
 
-    public float getDayTemperature() {
+    public double getDayTemperature() {
         return mDayTemperature;
     }
 
-    public float getNightTemperature() {
+    public double getNightTemperature() {
         return mNightTemperature;
     }
 
@@ -34,11 +35,11 @@ public class WeatherData {
         this.mCityName = mCityName;
     }
 
-    public void setDayTemperature(float mDayTemperature) {
+    public void setDayTemperature(double mDayTemperature) {
         this.mDayTemperature = mDayTemperature;
     }
 
-    public void setNightTemperature(float mNightTemperature) {
+    public void setNightTemperature(double mNightTemperature) {
         this.mNightTemperature = mNightTemperature;
     }
 
