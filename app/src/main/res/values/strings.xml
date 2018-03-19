@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Simple Weather</string>
+    <string name="app_name">Weather App</string>
     <string name="tittle_cities">Cities</string>
     <string name="action_cities">Cities</string>
 

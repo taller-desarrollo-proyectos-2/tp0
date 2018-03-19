@@ -1,4 +1,4 @@
-package com.fiuba.taller.tp0.networking;
+package com.fiuba.taller.tp0.utils;
 
 import android.content.Context;
 import android.net.ConnectivityManager;
