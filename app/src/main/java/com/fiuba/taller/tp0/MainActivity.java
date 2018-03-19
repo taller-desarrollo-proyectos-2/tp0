@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity implements WeatherDisplayer 
     private ListView list;
     //private ArrayAdapter<String> adaptador = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, sistemas);
     private ListView list1;
-    String[] web = {
+    String[] dias = {
             "Lunes",
             "Martes",
             "Miercoles",
@@ -48,6 +48,17 @@ public class MainActivity extends AppCompatActivity implements WeatherDisplayer 
             R.drawable.ic_launcher_background,
             R.drawable.ic_launcher_background
     };
+    Integer[] imageId2 = {
+            R.drawable.ic_launcher_background,
+            R.drawable.ic_launcher_background,
+            R.drawable.ic_launcher_background,
+            R.drawable.ic_launcher_background,
+            R.drawable.ic_launcher_background
+    };
+    String[] _temp1 = {"1","2","3","4","5"};
+    String[] _temp2 = {"1","3","2","4","5"};
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -111,7 +122,7 @@ public class MainActivity extends AppCompatActivity implements WeatherDisplayer 
             }
         });
 */
-        MainPrueba adapter1 = new MainPrueba(MainActivity.this, web, imageId);
+        MainPrueba adapter1 = new MainPrueba(MainActivity.this, dias, imageId,imageId2,_temp1,_temp2);
         list1=(ListView)findViewById(R.id.milista);
         list1.setAdapter(adapter1);
         list1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
