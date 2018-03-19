@@ -33,7 +33,21 @@ public class MainActivity extends AppCompatActivity implements WeatherDisplayer 
 
     private ListView list;
     //private ArrayAdapter<String> adaptador = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, sistemas);
-
+    private ListView list1;
+    String[] web = {
+            "Lunes",
+            "Martes",
+            "Miercoles",
+            "Jueves",
+            "Viernes"
+    } ;
+    Integer[] imageId = {
+            R.drawable.ic_launcher_background,
+            R.drawable.ic_launcher_background,
+            R.drawable.ic_launcher_background,
+            R.drawable.ic_launcher_background,
+            R.drawable.ic_launcher_background
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,10 +79,10 @@ public class MainActivity extends AppCompatActivity implements WeatherDisplayer 
 
         //WeatherData[] values = new WeatherData[]{lunes,martes,miercoles,jueves,viernes};
         //ArrayAdapter<WeatherData> adapter = new ArrayAdapter<WeatherData>(this, R.layout.dia_main, values);
-        String[] values = new String[]{"lunes","martes","miercoles","jueves","viernes"};
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, values);
+        //String[] values = new String[]{"lunes","martes","miercoles","jueves","viernes"};
+        //ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, values);
 
-        milista.setAdapter(adapter);
+        //milista.setAdapter(adapter);
         /*milista.setOnItemClickListener(new AdapterView.OnItemClickListener(){
 
             public void onItemClick(AdapterView<?> parent, View view, int position, long id){
@@ -83,6 +97,32 @@ public class MainActivity extends AppCompatActivity implements WeatherDisplayer 
         s.getWeatherData("Paris", this, this);
 
         setActivityTittle();
+
+/*
+        list=(ListView)findViewById(R.id.milista);
+        list.setAdapter(adapter);
+        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view,
+                                    int position, long id) {
+                //Toast.makeText(MainActivity.this, "You Clicked at " +web[+ position], Toast.LENGTH_SHORT).show();
+
+            }
+        });
+*/
+        MainPrueba adapter1 = new MainPrueba(MainActivity.this, web, imageId);
+        list1=(ListView)findViewById(R.id.milista);
+        list1.setAdapter(adapter1);
+        list1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view,
+                                    int position, long id) {
+                //Toast.makeText(MainActivity.this, "You Clicked at " +web[+ position], Toast.LENGTH_SHORT).show();
+
+            }
+        });
     }
 
     @Override
