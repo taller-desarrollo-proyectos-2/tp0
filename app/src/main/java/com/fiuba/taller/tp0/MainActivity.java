@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity implements WeatherDisplayer 
                         .setAction("Action", null).show();
             }
         });
-
+        
         bindServices(getApplicationContext());
 
         mCityPreference = new CityPreference(this);
@@ -79,8 +79,10 @@ public class MainActivity extends AppCompatActivity implements WeatherDisplayer 
 
         });*/
 
-        WeatherService s = ServiceLocator.get(WeatherService.class);
+        WeatherService s = getWeatherService();
         s.getWeatherData("Paris", this, this);
+
+        setActivityTittle();
     }
 
     @Override
@@ -98,7 +100,7 @@ public class MainActivity extends AppCompatActivity implements WeatherDisplayer 
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_cities) {
             openSelectCitiesActivity();
             return true;
         }
@@ -116,13 +118,22 @@ public class MainActivity extends AppCompatActivity implements WeatherDisplayer 
         return NetworkUtils.IsOnline(getBaseContext());
     }
 
-    private String getChosenCityId() {
-        return mCityPreference.getPreferedCityId();
+    private String getChosenCityName() {
+        return mCityPreference.getPreferedCityName();
     }
 
     private void openSelectCitiesActivity() {
         Intent intent = new Intent(this, SelectCityActivity.class);
         startActivity(intent);
+    }
+
+    private void setActivityTittle() {
+        String chosenCity = getChosenCityName();
+        setTitle(chosenCity);
+    }
+
+    private WeatherService getWeatherService() {
+        return ServiceLocator.get(WeatherService.class);
     }
 
     @Override
