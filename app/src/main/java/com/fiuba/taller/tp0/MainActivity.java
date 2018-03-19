@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity implements WeatherDisplayer 
         WeatherData viernes = new WeatherData("a",2,3,4);
 
         WeatherData[] values = new WeatherData[]{lunes,martes,miercoles,jueves,viernes};
-        ArrayAdapter<WeatherData> adapter = new ArrayAdapter<WeatherData>(this, android.R.layout.simple_list_item_1, values);
+        ArrayAdapter<WeatherData> adapter = new ArrayAdapter<WeatherData>(this, R.layout.dia_main, values);
         milista.setAdapter(adapter);
         milista.setOnItemClickListener(new AdapterView.OnItemClickListener(){
 
