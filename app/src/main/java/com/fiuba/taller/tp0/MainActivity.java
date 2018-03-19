@@ -81,6 +81,9 @@ public class MainActivity extends AppCompatActivity implements WeatherDisplayer 
 
         WeatherService s = ServiceLocator.get(WeatherService.class);
         s.getWeatherData("Paris", this, this);
+//        final ListView milistacities = (ListView)findViewById(R.id.milistacities);
+//        ArrayAdapter<String> adapterCity = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, s.getCities());
+//        milistacities.setAdapter(adapterCity);
     }
 
     @Override

@@ -21,7 +21,7 @@ public class SelectCityActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.cities_main);
     }
 
     /** Called when the user taps the Send button */

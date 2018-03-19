@@ -1,57 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.fiuba.taller.tp0.MainActivity">
+    <TableRow>
+        <ImageView
+            android:id="@+id/imgClima"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_alignBottom="@+id/texto3"
+            android:layout_toStartOf="@+id/texto2"
+            android:src="@android:drawable/ic_dialog_info" />
 
-    <ImageView
-        android:id="@+id/imgClima"
-        android:layout_width="35dp"
-        android:layout_height="35dp"
-        android:layout_alignBottom="@+id/texto3"
-        android:layout_toStartOf="@+id/texto2"
-        android:src="@android:drawable/ic_dialog_info" />
+        <TextView
+            android:id="@+id/texto1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginEnd="16dp"
+            android:layout_marginTop="33dp"
+            android:layout_toStartOf="@+id/texto3"
+            android:text="Texto Frase" />
 
-    <TextView
-        android:id="@+id/texto1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_marginEnd="16dp"
-        android:layout_marginTop="33dp"
-        android:layout_toStartOf="@+id/texto3"
-        android:text="Texto Frase" />
+        <TextView
+            android:id="@+id/texto2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/texto1"
+            android:layout_alignBottom="@+id/texto1"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="69dp"
+            android:text="Texto Frase" />
 
-    <TextView
-        android:id="@+id/texto2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/texto1"
-        android:layout_alignBottom="@+id/texto1"
-        android:layout_alignParentEnd="true"
-        android:layout_marginEnd="69dp"
-        android:text="Texto Frase" />
+        <ImageView
+            android:id="@+id/imgHumedad"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_alignBottom="@+id/texto2"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="25dp"
+            android:src="@android:drawable/ic_dialog_info" />
 
-    <ImageView
-        android:id="@+id/imgHumedad"
-        android:layout_width="35dp"
-        android:layout_height="35dp"
-        android:layout_alignBottom="@+id/texto2"
-        android:layout_alignParentEnd="true"
-        android:layout_marginEnd="25dp"
-        android:src="@android:drawable/ic_dialog_info" />
-
-    <TextView
-        android:id="@+id/texto3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/texto2"
-        android:layout_alignBottom="@+id/texto2"
-        android:layout_marginEnd="41dp"
-        android:layout_toStartOf="@+id/texto2"
-        android:text="Texto Frase" />
-
-</RelativeLayout>
+        <TextView
+            android:id="@+id/texto3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/texto2"
+            android:layout_alignBottom="@+id/texto2"
+            android:layout_marginEnd="41dp"
+            android:layout_toStartOf="@+id/texto2"
+            android:text="Texto Frase" />
+    </TableRow>
+</TableLayout>
