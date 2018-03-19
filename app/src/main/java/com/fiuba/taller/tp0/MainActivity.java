@@ -77,8 +77,6 @@ public class MainActivity extends AppCompatActivity implements WeatherDisplayer 
                         .setAction("Action", null).show();
             }
         });
-        
-        bindServices(getApplicationContext());
 
         mCityPreference = new CityPreference(this);
 
@@ -165,12 +163,6 @@ public class MainActivity extends AppCompatActivity implements WeatherDisplayer 
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    private void bindServices(Context context)
-    {
-        ServiceLocator.init(context);
-        ServiceLocator.bindCustomServiceImplementation(WeatherService.class, OpenWeatherService.class);
     }
 
     private boolean isOnline() {
