@@ -1,6 +1,7 @@
 package com.fiuba.taller.tp0;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -80,7 +81,7 @@ public class MainActivity extends AppCompatActivity implements WeatherDisplayer 
 
         WeatherService s = ServiceLocator.get(WeatherService.class);
         s.getWeatherData("Paris", this, this);
-}
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -98,6 +99,7 @@ public class MainActivity extends AppCompatActivity implements WeatherDisplayer 
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            openSelectCitiesActivity();
             return true;
         }
 
@@ -114,18 +116,23 @@ public class MainActivity extends AppCompatActivity implements WeatherDisplayer 
         return NetworkUtils.IsOnline(getBaseContext());
     }
 
-    private String GetChosenCityId() {
+    private String getChosenCityId() {
         return mCityPreference.getPreferedCityId();
     }
 
+    private void openSelectCitiesActivity() {
+        Intent intent = new Intent(this, SelectCityActivity.class);
+        startActivity(intent);
+    }
+
     @Override
-    public void DisplayWeatherData(WeatherData weatherData) {
+    public void displayWeatherData(WeatherData weatherData) {
 
         //TODO:
     }
 
     @Override
-    public void DisplayException(Exception e) {
+    public void displayException(Exception e) {
 
     }
 }

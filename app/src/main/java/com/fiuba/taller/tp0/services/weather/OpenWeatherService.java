@@ -61,9 +61,9 @@ public class OpenWeatherService implements WeatherService, DownloadCallback<Netw
         // update UI
         if (result.mResultValue != null) {
             WeatherData data = parseResponse(result.mResultValue);
-            mWeatherDisplayer.DisplayWeatherData(data);
+            mWeatherDisplayer.displayWeatherData(data);
         } else {
-            mWeatherDisplayer.DisplayException(result.mException);
+            mWeatherDisplayer.displayException(result.mException);
         }
         Log.i(SERVICE_LOG_TAG, result.toString());
     }
