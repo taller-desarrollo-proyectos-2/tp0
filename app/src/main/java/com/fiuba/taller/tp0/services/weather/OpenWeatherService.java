@@ -24,13 +24,14 @@ import org.json.JSONObject;
 public class OpenWeatherService implements WeatherService, DownloadCallback<NetworkResult> {
 
     private static final String LOG_TAG = "OpenWeatherService";
-    private static final String OPEN_WEATHER_MAP_API_FORMAT = "https://api.openweathermap.org/data/2.5/forecast?id=%s";
+    private static final String OPEN_WEATHER_MAP_API_FORMAT = "https://tdp2.herokuapp.com/api/v1/weather?city=%s";
 
     private static final String JSON_FORECAST = "forecast";
     private static final String JSON_DAY_TEMPERATURE = "day_temperature";
     private static final String JSON_NIGHT_TEMPERATURE = "night_temperature";
-    private static final String JSON_HUMIDITY = "humidity";
-    private static final String JSON_WEATHER_TYPE = "weather";
+    private static final String JSON_DATE = "date";
+    private static final String JSON_DAY_WEATHER_TYPE = "day_weather";
+    private static final String JSON_NIGHT_WEATHER_TYPE = "night_weather";
 
     private CitiesLoader mCitiesLoader;
     private WeatherDisplayer mWeatherDisplayer;
@@ -123,8 +124,24 @@ public class OpenWeatherService implements WeatherService, DownloadCallback<Netw
                 JSONObject dataJson = forecastJsonArray.getJSONObject(i);
                 WeatherData weatherData = new WeatherData();
 
-                weatherData.setDayTemperature(dataJson.getDouble(JSON_DAY_TEMPERATURE));
-                weatherData.setNightTemperature(dataJson.getDouble(JSON_NIGHT_TEMPERATURE));
+                weatherData.setDate(dataJson.getString(JSON_DATE));
+
+                String dayTemp = dataJson.getString(JSON_DAY_TEMPERATURE);
+                if (!dayTemp.equals("")) {
+                    weatherData.setDayTemperature(Double.parseDouble(dayTemp));
+                } else {
+                    weatherData.setDayTemperature(9999);
+                }
+
+                String nightTemp = dataJson.getString(JSON_NIGHT_TEMPERATURE);
+                if (!nightTemp.equals("")) {
+                    weatherData.setNightTemperature(Double.parseDouble(nightTemp));
+                } else {
+                    weatherData.setNightTemperature(9999);
+                }
+
+                weatherData.setDayWeatherType(dataJson.getString(JSON_DAY_WEATHER_TYPE));
+                weatherData.setNightWeatherType(dataJson.getString(JSON_NIGHT_WEATHER_TYPE));
 
                 weatherDataList.add(weatherData);
             }

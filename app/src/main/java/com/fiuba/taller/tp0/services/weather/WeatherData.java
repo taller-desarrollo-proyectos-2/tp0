@@ -5,7 +5,11 @@ public class WeatherData {
     private double mDayTemperature;
     private double mNightTemperature;
     private int mHumidity;
-    private String weatherType;
+    private String mDayWeatherType;
+
+    private String mDate;
+
+    private String mNightWeatherType;
 
     public WeatherData() {}
 
@@ -41,6 +45,30 @@ public class WeatherData {
 
     public void setNightTemperature(double mNightTemperature) {
         this.mNightTemperature = mNightTemperature;
+    }
+
+    public String getDayWeatherType() {
+        return mDayWeatherType;
+    }
+
+    public void setDayWeatherType(String mDay_WeatherType) {
+        this.mDayWeatherType = mDay_WeatherType;
+    }
+
+    public String getNightWeatherType() {
+        return mNightWeatherType;
+    }
+
+    public void setNightWeatherType(String mNight_WeatherType) {
+        this.mNightWeatherType = mNight_WeatherType;
+    }
+
+    public String getDate() {
+        return mDate;
+    }
+
+    public void setDate(String mDate) {
+        this.mDate = mDate;
     }
 
     public void setHumidity(int mHumidity) {
