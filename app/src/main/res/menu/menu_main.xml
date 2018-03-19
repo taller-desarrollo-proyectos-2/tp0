@@ -3,8 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.fiuba.taller.tp0.MainActivity">
     <item
-        android:id="@+id/action_settings"
+        android:id="@+id/action_cities"
         android:orderInCategory="100"
-        android:title="@string/action_settings"
+        android:title="@string/action_cities"
         app:showAsAction="never" />
 </menu>
