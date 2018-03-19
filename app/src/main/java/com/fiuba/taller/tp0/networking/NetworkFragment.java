@@ -1,6 +1,5 @@
 package com.fiuba.taller.tp0.networking;
 
-import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Context;
@@ -131,9 +130,8 @@ public class NetworkFragment extends Fragment {
          */
         @Override
         protected void onPreExecute() {
-            Activity activity = getActivity();
-            if ((mCallback != null) && (activity != null)) {
-                NetworkInfo networkInfo = mCallback.getActiveNetworkInfo(activity);
+            if (mCallback != null) {
+                NetworkInfo networkInfo = mCallback.getActiveNetworkInfo(getActivity());
                 if (networkInfo == null || !networkInfo.isConnected() ||
                         (networkInfo.getType() != ConnectivityManager.TYPE_WIFI
                                 && networkInfo.getType() != ConnectivityManager.TYPE_MOBILE)) {
