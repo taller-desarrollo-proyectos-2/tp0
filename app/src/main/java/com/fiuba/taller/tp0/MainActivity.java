@@ -62,10 +62,13 @@ public class MainActivity extends AppCompatActivity implements WeatherDisplayer 
         WeatherData jueves = new WeatherData("a",2,3,4);
         WeatherData viernes = new WeatherData("a",2,3,4);
 
-        WeatherData[] values = new WeatherData[]{lunes,martes,miercoles,jueves,viernes};
-        ArrayAdapter<WeatherData> adapter = new ArrayAdapter<WeatherData>(this, R.layout.dia_main, values);
+        //WeatherData[] values = new WeatherData[]{lunes,martes,miercoles,jueves,viernes};
+        //ArrayAdapter<WeatherData> adapter = new ArrayAdapter<WeatherData>(this, R.layout.dia_main, values);
+        String[] values = new String[]{"lunes","martes","miercoles","jueves","viernes"};
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, values);
+
         milista.setAdapter(adapter);
-        milista.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+        /*milista.setOnItemClickListener(new AdapterView.OnItemClickListener(){
 
             public void onItemClick(AdapterView<?> parent, View view, int position, long id){
                 int item = position;
@@ -73,7 +76,7 @@ public class MainActivity extends AppCompatActivity implements WeatherDisplayer 
                 Toast.makeText(getApplicationContext(), "Position: "+ item+" - Valor: "+itemval, Toast.LENGTH_LONG).show();
             }
 
-        });
+        });*/
 
         WeatherService s = ServiceLocator.get(WeatherService.class);
         s.getWeatherData("Paris", this, this);
