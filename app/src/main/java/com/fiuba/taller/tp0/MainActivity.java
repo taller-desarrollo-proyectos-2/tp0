@@ -237,8 +237,13 @@ public class MainActivity extends AppCompatActivity implements WeatherDisplayer 
         for (int i = 0; i < weatherDataList.size(); i++) {
             WeatherData data = weatherDataList.get(i);
             double temperature = data.getDayTemperature();
-
-            daysTemperatures.add(String.format("%.2f", temperature));
+            String tempString;
+            if (temperature == 9999.0) {
+                tempString = "-";
+            } else {
+                tempString = String.format("%.1f ºC", temperature);
+            }
+            daysTemperatures.add(tempString);
         }
         return daysTemperatures.toArray(new String[weatherDataList.size()]);
     }
@@ -248,7 +253,13 @@ public class MainActivity extends AppCompatActivity implements WeatherDisplayer 
         for (int i = 0; i < weatherDataList.size(); i++) {
             WeatherData data = weatherDataList.get(i);
             double temperature = data.getNightTemperature();
-            nightTemperatures.add(String.format("%.2f", temperature));
+            String tempString;
+            if (temperature == 9999.0) {
+                tempString = "-";
+            } else {
+                tempString = String.format("%.1f ºC", temperature);
+            }
+            nightTemperatures.add(tempString);
         }
         return nightTemperatures.toArray(new String[weatherDataList.size()]);
     }
