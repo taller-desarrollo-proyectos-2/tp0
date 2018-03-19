@@ -55,6 +55,12 @@ public class MainActivity extends AppCompatActivity implements WeatherDisplayer 
 
         mCityPreference = new CityPreference(this);
 
+        if (!isOnline()) {
+            ShowNoConnectionToast();
+            // Si no hay coneccion no carga datos.
+            return;
+        }
+
         final ListView milista = (ListView)findViewById(R.id.milista);
 
         WeatherData lunes = new WeatherData("a",2,3,4);
@@ -83,6 +89,7 @@ public class MainActivity extends AppCompatActivity implements WeatherDisplayer 
         s.getWeatherData("Paris", this, this);
 
         setActivityTittle();
+
     }
 
     @Override
@@ -119,7 +126,8 @@ public class MainActivity extends AppCompatActivity implements WeatherDisplayer 
     }
 
     private String getChosenCityName() {
-        return mCityPreference.getPreferedCityName();
+        int cityIndexKey = mCityPreference.getPreferedCityIndexKey();
+        return getWeatherService().getCityName(cityIndexKey);
     }
 
     private void openSelectCitiesActivity() {
@@ -136,6 +144,10 @@ public class MainActivity extends AppCompatActivity implements WeatherDisplayer 
         return ServiceLocator.get(WeatherService.class);
     }
 
+    private void ShowNoConnectionToast() {
+        Toast.makeText(this, R.string.message_no_connection, Toast.LENGTH_LONG).show();
+    }
+
     @Override
     public void displayWeatherData(WeatherData weatherData) {
 
@@ -144,6 +156,6 @@ public class MainActivity extends AppCompatActivity implements WeatherDisplayer 
 
     @Override
     public void displayException(Exception e) {
-
+        ShowNoConnectionToast();
     }
 }

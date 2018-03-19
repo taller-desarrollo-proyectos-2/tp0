@@ -21,7 +21,7 @@ import org.json.JSONObject;
 
 public class OpenWeatherService implements WeatherService, DownloadCallback<NetworkResult> {
 
-    private static final String SERVICE_LOG_TAG = "OpenWeatherService";
+    private static final String LOG_TAG = "OpenWeatherService";
     private static final String OPEN_WEATHER_MAP_API_FORMAT =
             "https://api.openweathermap.org/data/2.5/weather?q=%s";
 
@@ -59,6 +59,11 @@ public class OpenWeatherService implements WeatherService, DownloadCallback<Netw
     }
 
     @Override
+    public String getCityName(int indexKey) {
+        return mCitiesLoader.GetCityName(indexKey);
+    }
+
+    @Override
     public void onResponseReceived(NetworkResult result) {
         // update UI
         if (result.mResultValue != null) {
@@ -67,7 +72,7 @@ public class OpenWeatherService implements WeatherService, DownloadCallback<Netw
         } else {
             mWeatherDisplayer.displayException(result.mException);
         }
-        Log.i(SERVICE_LOG_TAG, result.toString());
+        Log.i(LOG_TAG, result.toString());
     }
 
     @Override
@@ -104,7 +109,16 @@ public class OpenWeatherService implements WeatherService, DownloadCallback<Netw
     }
 
     private WeatherData parseResponse(String response) {
+        WeatherData data = new WeatherData();
+        try {
+            JSONObject obj = new JSONObject(response);
 
+            Log.d("My App", obj.toString());
+
+        } catch (Exception e) {
+            Log.e(LOG_TAG, "Could not parse response: " + response);
+            e.printStackTrace();
+        }
         return null;
     }
 }

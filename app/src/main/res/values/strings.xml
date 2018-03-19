@@ -3,6 +3,8 @@
     <string name="tittle_cities">Cities</string>
     <string name="action_cities">Cities</string>
 
+    <string name="message_no_connection">No fue posible conectarse al servidor, por favor reintente más tarde</string>>
+
     <string name="open_weather_api_key">32ffc1fef8f297d2ad71a4787d55f324</string>
 
     <string name="open_weather_failed_connection">Connection to Open Weather API failed!</string>
