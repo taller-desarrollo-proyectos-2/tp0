@@ -29,7 +29,6 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements WeatherDisplayer {
 
-    private CityPreference mCityPreference;
     private NetworkFragment mNetworkFragment = null;
     private boolean mDownloading = false;
 
@@ -47,13 +46,15 @@ public class MainActivity extends AppCompatActivity implements WeatherDisplayer 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (!isOnline()) {
+                    showNoConnectionToast();
+                    return;
+                }
                 updateWeatherValues();
                 /*Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();*/
             }
         });
-
-        mCityPreference = new CityPreference(this);
 
         if (!isOnline()) {
             showNoConnectionToast();
@@ -84,11 +85,6 @@ public class MainActivity extends AppCompatActivity implements WeatherDisplayer 
             }
 
         });*/
-
-        updateWeatherValues();
-
-        setActivityTittle();
-
 /*
         list=(ListView)findViewById(R.id.milista);
         list.setAdapter(adapter);
@@ -103,6 +99,13 @@ public class MainActivity extends AppCompatActivity implements WeatherDisplayer 
         });
 */
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        updateWeatherValues();
+        setActivityTittle();
     }
 
     @Override
@@ -133,7 +136,8 @@ public class MainActivity extends AppCompatActivity implements WeatherDisplayer 
     }
 
     private String getChosenCityName() {
-        int cityIndexKey = mCityPreference.getPreferedCityIndexKey();
+        CityPreference cityPreference = new CityPreference(this);
+        int cityIndexKey = cityPreference.getPreferedCityIndexKey();
         return getWeatherService().getCityName(cityIndexKey);
     }
 
@@ -157,7 +161,8 @@ public class MainActivity extends AppCompatActivity implements WeatherDisplayer 
 
     private void updateWeatherValues() {
         WeatherService weatherService = getWeatherService();
-        int cityIndexKey = mCityPreference.getPreferedCityIndexKey();
+        CityPreference cityPreference = new CityPreference(this);
+        int cityIndexKey = cityPreference.getPreferedCityIndexKey();
         String cityId = weatherService.getCityId(cityIndexKey);
         weatherService.getWeatherData(cityId, this, this);
     }
