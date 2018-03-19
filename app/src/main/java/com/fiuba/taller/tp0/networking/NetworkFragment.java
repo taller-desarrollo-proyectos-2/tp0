@@ -49,16 +49,15 @@ public class NetworkFragment extends Fragment {
         // The NetworkFragment is recoverable because it calls setRetainInstance(true).
         NetworkFragment networkFragment = (NetworkFragment) fragmentManager.findFragmentByTag(NetworkFragment.TAG);
 
-        if (networkFragment == null) {
-            networkFragment = new NetworkFragment();
-            Bundle args = new Bundle();
-            args.putParcelable(DATA_OBJECT, networkObject);
-            networkFragment.setArguments(args);
-            fragmentManager.beginTransaction().add(networkFragment, TAG).commit();
+        networkFragment = new NetworkFragment();
+        Bundle args = new Bundle();
+        args.putParcelable(DATA_OBJECT, networkObject);
+        networkFragment.setArguments(args);
+        fragmentManager.beginTransaction().add(networkFragment, TAG).commit();
 
-            // execute immediately
-             fragmentManager.executePendingTransactions();
-        }
+        // execute immediately
+         fragmentManager.executePendingTransactions();
+
         return networkFragment;
     }
 

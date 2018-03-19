@@ -1,5 +1,6 @@
 package com.fiuba.taller.tp0.services.weather;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,12 +18,19 @@ import com.fiuba.taller.tp0.networking.NetworkFragment;
 import com.fiuba.taller.tp0.networking.NetworkObject;
 import com.fiuba.taller.tp0.networking.NetworkResult;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 public class OpenWeatherService implements WeatherService, DownloadCallback<NetworkResult> {
 
     private static final String LOG_TAG = "OpenWeatherService";
     private static final String OPEN_WEATHER_MAP_API_FORMAT = "https://api.openweathermap.org/data/2.5/forecast?id=%s";
+
+    private static final String JSON_FORECAST = "forecast";
+    private static final String JSON_DAY_TEMPERATURE = "day_temperature";
+    private static final String JSON_NIGHT_TEMPERATURE = "night_temperature";
+    private static final String JSON_HUMIDITY = "humidity";
+    private static final String JSON_WEATHER_TYPE = "weather";
 
     private CitiesLoader mCitiesLoader;
     private WeatherDisplayer mWeatherDisplayer;
@@ -36,10 +44,8 @@ public class OpenWeatherService implements WeatherService, DownloadCallback<Netw
     @Override
     public void getWeatherData(String cityName, WeatherDisplayer displayer, Activity activity) {
         mWeatherDisplayer = displayer;
-        if (mNetworkFragment == null) {
-            NetworkObject networkObject = createRequestNetworkObject(cityName, activity);
-            mNetworkFragment = NetworkFragment.getInstance(activity.getFragmentManager(), networkObject);
-        }
+        NetworkObject networkObject = createRequestNetworkObject(cityName, activity);
+        mNetworkFragment = NetworkFragment.getInstance(activity.getFragmentManager(), networkObject);
         if (!mDownloading && mNetworkFragment != null) {
             // Execute the async download.
             mNetworkFragment.startDownload(this);
@@ -98,26 +104,35 @@ public class OpenWeatherService implements WeatherService, DownloadCallback<Netw
         mCitiesLoader.loadCities(context);
     }
 
-    private NetworkObject createRequestNetworkObject(String cityName, Context context)
+    private NetworkObject createRequestNetworkObject(String cityId, Context context)
     {
-        String url = String.format(OPEN_WEATHER_MAP_API_FORMAT, cityName);
-        url = "https://api.openweathermap.org/data/2.5/forecast?id=3435910";
+        String url = String.format(OPEN_WEATHER_MAP_API_FORMAT, cityId);
         Map<String, String> requestProperties = new HashMap<>();
         requestProperties.put("x-api-key", context.getString(R.string.open_weather_api_key));
         return new NetworkObject(url, HttpMethodType.GET, requestProperties);
     }
 
     private List<WeatherData> parseResponse(String response) {
-        WeatherData data = new WeatherData();
-        try {
-            JSONObject obj = new JSONObject(response);
 
-            Log.d("My App", obj.toString());
+        List<WeatherData> weatherDataList = new ArrayList<>();
+        try {
+            JSONObject jsonResponse = new JSONObject(response);
+
+            JSONArray forecastJsonArray = jsonResponse.getJSONArray(JSON_FORECAST);
+            for (int i = 0; i < forecastJsonArray.length(); i++) {
+                JSONObject dataJson = forecastJsonArray.getJSONObject(i);
+                WeatherData weatherData = new WeatherData();
+
+                weatherData.setDayTemperature(dataJson.getDouble(JSON_DAY_TEMPERATURE));
+                weatherData.setNightTemperature(dataJson.getDouble(JSON_NIGHT_TEMPERATURE));
+
+                weatherDataList.add(weatherData);
+            }
 
         } catch (Exception e) {
             Log.e(LOG_TAG, "Could not parse response: " + response);
             e.printStackTrace();
         }
-        return null;
+        return weatherDataList;
     }
 }
