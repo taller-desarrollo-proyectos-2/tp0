@@ -131,7 +131,7 @@ public class NetworkFragment extends Fragment {
         @Override
         protected void onPreExecute() {
             if (mCallback != null) {
-                NetworkInfo networkInfo = mCallback.getActiveNetworkInfo(getContext());
+                NetworkInfo networkInfo = mCallback.getActiveNetworkInfo(getActivity());
                 if (networkInfo == null || !networkInfo.isConnected() ||
                         (networkInfo.getType() != ConnectivityManager.TYPE_WIFI
                                 && networkInfo.getType() != ConnectivityManager.TYPE_MOBILE)) {

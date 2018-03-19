@@ -1,6 +1,7 @@
 package com.fiuba.taller.tp0.services.weather;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import android.app.Activity;
@@ -22,10 +23,15 @@ public class OpenWeatherService implements WeatherService, DownloadCallback<Netw
     private static final String OPEN_WEATHER_MAP_API_FORMAT =
             "https://api.openweathermap.org/data/2.5/weather?q=%s";
 
+    private CitiesLoader mCitiesLoader;
     private WeatherDisplayer mWeatherDisplayer;
     private NetworkFragment mNetworkFragment = null;
     private boolean mDownloading = false;
 
+    public OpenWeatherService(Context context) {
+        mCitiesLoader = new CitiesLoader();
+        mCitiesLoader.loadCities(context);
+    }
     @Override
     public void getWeatherData(String cityName, WeatherDisplayer displayer, Activity activity) {
         mWeatherDisplayer = displayer;
@@ -38,6 +44,16 @@ public class OpenWeatherService implements WeatherService, DownloadCallback<Netw
             mNetworkFragment.startDownload(this);
             mDownloading = true;
         }
+    }
+
+    @Override
+    public List<String> getCities() {
+        return mCitiesLoader.getCities();
+    }
+
+    @Override
+    public String getCityId(String cityName) {
+        return mCitiesLoader.GetCityId(cityName);
     }
 
     @Override
@@ -70,6 +86,10 @@ public class OpenWeatherService implements WeatherService, DownloadCallback<Netw
             mNetworkFragment.cancelDownload();
         }
         mDownloading = false;
+    }
+
+    private void loadCities(Context context) {
+        mCitiesLoader.loadCities(context);
     }
 
     private NetworkObject createRequestNetworkObject(String cityName, Context context)
