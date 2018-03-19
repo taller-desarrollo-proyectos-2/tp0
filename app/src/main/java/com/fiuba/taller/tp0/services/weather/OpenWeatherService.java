@@ -22,8 +22,7 @@ import org.json.JSONObject;
 public class OpenWeatherService implements WeatherService, DownloadCallback<NetworkResult> {
 
     private static final String LOG_TAG = "OpenWeatherService";
-    private static final String OPEN_WEATHER_MAP_API_FORMAT =
-            "https://api.openweathermap.org/data/2.5/weather?q=%s";
+    private static final String OPEN_WEATHER_MAP_API_FORMAT = "https://api.openweathermap.org/data/2.5/forecast?id=%s";
 
     private CitiesLoader mCitiesLoader;
     private WeatherDisplayer mWeatherDisplayer;

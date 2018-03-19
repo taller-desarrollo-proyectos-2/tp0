@@ -1,30 +1,30 @@
 package com.fiuba.taller.tp0;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import com.fiuba.taller.tp0.networking.NetworkFragment;
 import com.fiuba.taller.tp0.services.ServiceLocator;
 import com.fiuba.taller.tp0.services.weather.CityPreference;
-import com.fiuba.taller.tp0.services.weather.OpenWeatherService;
 import com.fiuba.taller.tp0.services.weather.WeatherData;
 import com.fiuba.taller.tp0.services.weather.WeatherDisplayer;
 import com.fiuba.taller.tp0.services.weather.WeatherService;
+import com.fiuba.taller.tp0.utils.CalendarUtils;
 import com.fiuba.taller.tp0.utils.NetworkUtils;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements WeatherDisplayer {
@@ -35,9 +35,6 @@ public class MainActivity extends AppCompatActivity implements WeatherDisplayer 
 
     private ListView list;
     //private ArrayAdapter<String> adaptador = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, sistemas);
-
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,7 +55,7 @@ public class MainActivity extends AppCompatActivity implements WeatherDisplayer 
         mCityPreference = new CityPreference(this);
 
         if (!isOnline()) {
-            ShowNoConnectionToast();
+            showNoConnectionToast();
             // Si no hay coneccion no carga datos.
             return;
         }
@@ -87,8 +84,7 @@ public class MainActivity extends AppCompatActivity implements WeatherDisplayer 
 
         });*/
 
-        WeatherService s = getWeatherService();
-        s.getWeatherData("Paris", this, this);
+        updateWeatherValues();
 
         setActivityTittle();
 
@@ -154,20 +150,23 @@ public class MainActivity extends AppCompatActivity implements WeatherDisplayer 
         return ServiceLocator.get(WeatherService.class);
     }
 
-    private void ShowNoConnectionToast() {
+    private void showNoConnectionToast() {
         Toast.makeText(this, R.string.message_no_connection, Toast.LENGTH_LONG).show();
+    }
+
+    private void updateWeatherValues() {
+        WeatherService weatherService = getWeatherService();
+        int cityIndexKey = mCityPreference.getPreferedCityIndexKey();
+        String cityId = weatherService.getCityId(cityIndexKey);
+        weatherService.getWeatherData(cityId, this, this);
     }
 
     @Override
     public void displayWeatherData(List<WeatherData> weatherData) {
         ListView list1;
-        String[] dias = {
-                "Lunes",
-                "Martes",
-                "Miercoles",
-                "Jueves",
-                "Viernes"
-        } ;
+
+        String[] dias = getFiveNextDays();
+
         Integer[] imageId = {
                 R.drawable.a10d,
                 R.drawable.a02d,
@@ -199,8 +198,20 @@ public class MainActivity extends AppCompatActivity implements WeatherDisplayer 
         });
     }
 
+    private String[] getFiveNextDays(){
+        List<String> days = new ArrayList<>();
+        Calendar calendar = Calendar.getInstance();
+        SimpleDateFormat dateFormater = new SimpleDateFormat("yyyy-MM-dd");
+        for (int i = 0; i < 5; i++) {
+            String day = CalendarUtils.getDayOfWeek(dateFormater.format(calendar.getTime()), "-");
+            days.add(day);
+            calendar.add(Calendar.DAY_OF_MONTH, 1);
+        }
+        return days.toArray(new String[5]);
+    }
+
     @Override
     public void displayException(Exception e) {
-        ShowNoConnectionToast();
+        showNoConnectionToast();
     }
 }
