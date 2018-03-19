@@ -67,7 +67,7 @@ public class OpenWeatherService implements WeatherService, DownloadCallback<Netw
     public void onResponseReceived(NetworkResult result) {
         // update UI
         if (result.mResultValue != null) {
-            WeatherData data = parseResponse(result.mResultValue);
+            List<WeatherData> data = parseResponse(result.mResultValue);
             mWeatherDisplayer.displayWeatherData(data);
         } else {
             mWeatherDisplayer.displayException(result.mException);
@@ -108,7 +108,7 @@ public class OpenWeatherService implements WeatherService, DownloadCallback<Netw
         return new NetworkObject(url, HttpMethodType.GET, requestProperties);
     }
 
-    private WeatherData parseResponse(String response) {
+    private List<WeatherData> parseResponse(String response) {
         WeatherData data = new WeatherData();
         try {
             JSONObject obj = new JSONObject(response);

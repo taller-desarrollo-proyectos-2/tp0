@@ -25,6 +25,8 @@ import com.fiuba.taller.tp0.services.weather.WeatherData;
 import com.fiuba.taller.tp0.services.weather.WeatherDisplayer;
 import com.fiuba.taller.tp0.services.weather.WeatherService;
 
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity implements WeatherDisplayer {
 
     private CityPreference mCityPreference;
@@ -191,7 +193,7 @@ public class MainActivity extends AppCompatActivity implements WeatherDisplayer 
     }
 
     @Override
-    public void displayWeatherData(WeatherData weatherData) {
+    public void displayWeatherData(List<WeatherData> weatherData) {
 
         //TODO:
     }
