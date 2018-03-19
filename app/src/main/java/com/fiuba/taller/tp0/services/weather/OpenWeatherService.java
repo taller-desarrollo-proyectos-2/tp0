@@ -141,7 +141,7 @@ public class OpenWeatherService implements WeatherService, DownloadCallback<Netw
                 }
 
                 weatherData.setDayWeatherType(dataJson.getString(JSON_DAY_WEATHER_TYPE));
-                weatherData.setNightWeatherType(dataJson.getString(JSON_NIGHT_TEMPERATURE));
+                weatherData.setNightWeatherType(dataJson.getString(JSON_NIGHT_WEATHER_TYPE));
 
                 weatherDataList.add(weatherData);
             }
