@@ -9,6 +9,10 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.Toast;
 
 import com.fiuba.taller.tp0.networking.NetworkFragment;
 import com.fiuba.taller.tp0.networking.NetworkUtils;
@@ -22,6 +26,10 @@ public class MainActivity extends AppCompatActivity implements WeatherDisplayer 
 
     private NetworkFragment mNetworkFragment = null;
     private boolean mDownloading = false;
+
+    private ListView list;
+    //private ArrayAdapter<String> adaptador = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, sistemas);
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,8 +47,29 @@ public class MainActivity extends AppCompatActivity implements WeatherDisplayer 
             }
         });
 
-
         bindServices(getApplicationContext());
+
+
+        final ListView milista = (ListView)findViewById(R.id.milista);
+
+        WeatherData lunes = new WeatherData("a",2,3,4);
+        WeatherData martes = new WeatherData("a",2,3,4);
+        WeatherData miercoles = new WeatherData("a",2,3,4);
+        WeatherData jueves = new WeatherData("a",2,3,4);
+        WeatherData viernes = new WeatherData("a",2,3,4);
+
+        WeatherData[] values = new WeatherData[]{lunes,martes,miercoles,jueves,viernes};
+        ArrayAdapter<WeatherData> adapter = new ArrayAdapter<WeatherData>(this, android.R.layout.simple_list_item_1, values);
+        milista.setAdapter(adapter);
+        milista.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id){
+                int item = position;
+                String itemval = (String)milista.getItemAtPosition(position);
+                Toast.makeText(getApplicationContext(), "Position: "+ item+" - Valor: "+itemval, Toast.LENGTH_LONG).show();
+            }
+
+        });
 
         WeatherService s = ServiceLocator.get(WeatherService.class);
         s.getWeatherData("Paris", this, this);
@@ -81,6 +110,7 @@ public class MainActivity extends AppCompatActivity implements WeatherDisplayer 
     @Override
     public void DisplayWeatherData(WeatherData weatherData) {
 
+        //TODO:
     }
 
     @Override
