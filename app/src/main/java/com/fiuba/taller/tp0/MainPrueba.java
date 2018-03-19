@@ -32,12 +32,22 @@ public class MainPrueba extends ArrayAdapter<String>{
     public View getView(int position, View view, ViewGroup parent) {
         LayoutInflater inflater = context.getLayoutInflater();
         View rowView= inflater.inflate(R.layout.prueba_main, null, true);
-        TextView txtTitle = (TextView) rowView.findViewById(R.id.txt);
 
-        txtTitle.setText(nombreSemana[position]);
+        TextView nomDia = (TextView) rowView.findViewById(R.id.txt);
+        nomDia.setText(nombreSemana[position]);
+
         ImageView imageView = (ImageView) rowView.findViewById(R.id.img);
-
         imageView.setImageResource(imgM[position]);
+
+        ImageView imageView1 = (ImageView) rowView.findViewById(R.id.img2);
+        imageView1.setImageResource(imgT[position]);
+
+        TextView tempDia = (TextView) rowView.findViewById(R.id.txt2);
+        tempDia.setText(tempM[position]);
+
+        TextView tempNoc = (TextView) rowView.findViewById(R.id.txt3);
+        tempNoc.setText(tempT[position]);
+
         return rowView;
     }
 }
